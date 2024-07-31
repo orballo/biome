@@ -719,7 +719,7 @@ impl<'a> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a> {
             f,
             [group(&format_args![
                 self.l_paren,
-                soft_block_indent(&format_with(|f| {
+                soft_block_indent_with_maybe_space(&format_with(|f| {
                     for (index, entry) in self.args.iter().enumerate() {
                         if index > 0 {
                             match entry.leading_lines() {
@@ -735,7 +735,7 @@ impl<'a> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a> {
                         write!(f, [FormatTrailingCommas::All])?;
                     }
                     Ok(())
-                })),
+                }), true),
                 self.r_paren,
             ])
             .should_expand(self.expand)]
