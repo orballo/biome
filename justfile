@@ -188,4 +188,4 @@ set-path:
     just set-path
 
 watch-quick-test package="biome_js_formatter":
-  cargo watch -w crates/biome_js_formatter -s "just test-quick {{package}}"
+  cargo watch -w crates/biome_js_formatter -x "test -p {{package}} --test quick_test -- quick_test --nocapture --ignored"
