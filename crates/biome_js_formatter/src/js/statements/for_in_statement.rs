@@ -31,11 +31,13 @@ impl FormatNodeRule<JsForInStatement> for FormatJsForInStatement {
                 for_token,
                 space(),
                 l_paren_token.format(),
+                space(),
                 initializer,
                 space(),
                 in_token,
                 space(),
                 expression,
+                space(),
                 r_paren_token.format(),
                 FormatStatementBody::new(&body?)
             ))]

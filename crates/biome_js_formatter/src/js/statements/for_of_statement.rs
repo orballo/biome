@@ -35,11 +35,13 @@ impl FormatNodeRule<JsForOfStatement> for FormatJsForOfStatement {
                 [
                     space(),
                     l_paren_token.format(),
+                    space(),
                     initializer.format(),
                     space(),
                     of_token.format(),
                     space(),
                     expression.format(),
+                    space(),
                     r_paren_token.format(),
                     FormatStatementBody::new(&body)
                 ]
