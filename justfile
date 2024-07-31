@@ -186,3 +186,6 @@ set-path:
 @build:
     cargo build --release -p biome_cli
     just set-path
+
+watch-quick-test package="biome_js_formatter":
+  cargo watch -w crates/biome_js_formatter -s "just test-quick {{package}}"
