@@ -490,26 +490,25 @@ fn write_grouped_arguments(
             buffer,
             [
                 l_paren,
-                soft_block_indent_with_maybe_space(
-                    &format_with(|f| {
-                        let mut joiner = f.join_with(soft_line_break_or_space());
+                soft_line_break_or_space(),
+                &format_with(|f| {
+                    let mut joiner = f.join_with(soft_line_break_or_space());
 
-                        match group_layout {
-                            GroupedCallArgumentLayout::GroupedFirstArgument => {
-                                joiner.entry(&group(&grouped[0]).should_expand(true));
-                                joiner.entries(&grouped[1..]).finish()
-                            }
-                            GroupedCallArgumentLayout::GroupedLastArgument => {
-                                let last_index = grouped.len() - 1;
-                                joiner.entries(&grouped[..last_index]);
-                                joiner
-                                    .entry(&group(&grouped[last_index]).should_expand(true))
-                                    .finish()
-                            }
+                    match group_layout {
+                        GroupedCallArgumentLayout::GroupedFirstArgument => {
+                            joiner.entry(&group(&grouped[0]).should_expand(true));
+                            joiner.entries(&grouped[1..]).finish()
                         }
-                    }),
-                    true
-                ),
+                        GroupedCallArgumentLayout::GroupedLastArgument => {
+                            let last_index = grouped.len() - 1;
+                            joiner.entries(&grouped[..last_index]);
+                            joiner
+                                .entry(&group(&grouped[last_index]).should_expand(true))
+                                .finish()
+                        }
+                    }
+                }),
+                soft_line_break_or_space(),
                 r_paren
             ]
         )?;
