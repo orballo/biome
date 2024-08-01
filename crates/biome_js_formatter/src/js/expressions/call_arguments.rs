@@ -62,6 +62,8 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [
                     l_paren_token.format(),
+                    // TODO: needs `wp-mode` implemented to make it optional.
+                    space(),
                     format_with(|f| {
                         f.join_with(space())
                             .entries(
@@ -70,6 +72,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                             )
                             .finish()
                     }),
+                    space(),
                     r_paren_token.format()
                 ]
             );
@@ -115,9 +118,9 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [
                     l_paren_token.format(),
-                    soft_block_indent(&format_once(|f| {
+                    soft_block_indent_with_maybe_space(&format_once(|f| {
                         write_arguments_multi_line(arguments.iter(), f)
-                    })),
+                    }), true),
                     r_paren_token.format(),
                 ]
             )
