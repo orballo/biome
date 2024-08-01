@@ -155,13 +155,13 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                                 group(&format_args![
                                     soft_line_indent_or_hard_space(&format_with(|f| {
                                         if should_add_parens {
-                                            write!(f, [if_group_fits_on_line(&text("("))])?;
+                                            write!(f, [if_group_fits_on_line(&format_args!(text("("), space()))])?;
                                         }
 
                                         write!(f, [format_body])?;
 
                                         if should_add_parens {
-                                            write!(f, [if_group_fits_on_line(&text(")"))])?;
+                                            write!(f, [if_group_fits_on_line(&format_args!(space(), text(")")))])?;
                                         }
 
                                         Ok(())
