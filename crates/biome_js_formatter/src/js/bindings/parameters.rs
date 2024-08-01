@@ -99,7 +99,7 @@ impl Format<JsFormatContext> for FormatAnyJsParameters {
                 write!(
                     f,
                     [soft_block_indent_with_maybe_space(
-                        &FormatJsAnyParameterList::with_layout(&list, ParameterLayout::Default,),
+                        &FormatJsAnyParameterList::with_layout(&list, ParameterLayout::Default),
                         true
                     )]
                 )?;
