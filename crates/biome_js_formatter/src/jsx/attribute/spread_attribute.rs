@@ -53,7 +53,7 @@ impl FormatNodeRule<JsxSpreadAttribute> for FormatJsxSpreadAttribute {
         {
             write!(f, [soft_block_indent_with_maybe_space(&format_inner, true)])?;
         } else {
-            write!(f, [format_inner])?;
+            write!(f, [space(), format_inner, space()])?;
         }
 
         write![f, [r_curly_token.format()]]
