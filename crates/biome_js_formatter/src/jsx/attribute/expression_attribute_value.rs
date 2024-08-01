@@ -29,8 +29,10 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
                 f,
                 [
                     l_curly_token.format(),
+                    space(),
                     expression.format(),
                     line_suffix_boundary(),
+                    space(),
                     r_curly_token.format()
                 ]
             )
