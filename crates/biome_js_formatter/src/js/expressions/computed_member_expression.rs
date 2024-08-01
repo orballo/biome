@@ -51,7 +51,7 @@ impl Format<JsFormatContext> for FormatComputedMemberLookup<'_> {
                     [
                         self.0.optional_chain_token().format(),
                         self.0.l_brack_token().format(),
-                        literal.format(),
+                        soft_block_indent_with_maybe_space(&literal.format(), true),
                         self.0.r_brack_token().format()
                     ]
                 )
