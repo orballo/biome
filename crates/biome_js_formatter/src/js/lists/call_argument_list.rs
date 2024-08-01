@@ -16,12 +16,15 @@ impl FormatRule<JsCallArgumentList> for FormatJsCallArgumentList {
 
         write!(
             f,
-            [&group(&soft_block_indent(&format_with(|f| {
-                let separated = node
-                    .format_separated(",")
-                    .with_trailing_separator(TrailingSeparator::Omit);
-                write_arguments_multi_line(separated, f)
-            })))]
+            [&group(&soft_block_indent_with_maybe_space(
+                &format_with(|f| {
+                    let separated = node
+                        .format_separated(",")
+                        .with_trailing_separator(TrailingSeparator::Omit);
+                    write_arguments_multi_line(separated, f)
+                }),
+                true
+            ))]
         )
     }
 }

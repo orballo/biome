@@ -114,7 +114,7 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
                 f,
                 [group(&format_args![
                     if_group_breaks(&text("(")),
-                    soft_block_indent(&argument.format()),
+                    soft_block_indent_with_maybe_space(&argument.format(), true),
                     if_group_breaks(&text(")"))
                 ])]
             )

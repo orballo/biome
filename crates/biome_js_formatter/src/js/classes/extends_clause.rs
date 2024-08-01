@@ -43,7 +43,7 @@ impl FormatNodeRule<JsExtendsClause> for FormatJsExtendsClause {
                         [
                             if_group_breaks(&format_args![
                                 text("("),
-                                &soft_block_indent(&content),
+                                &soft_block_indent_with_maybe_space(&content, true),
                                 text(")"),
                             ]),
                             if_group_fits_on_line(&content)

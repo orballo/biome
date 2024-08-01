@@ -43,7 +43,7 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
                         f,
                         [group(&format_args![
                             l_curly_token.format(),
-                            soft_block_indent(&expression.format()),
+                            soft_block_indent_with_maybe_space(&expression.format(), true),
                             line_suffix_boundary(),
                             r_curly_token.format()
                         ])]

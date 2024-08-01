@@ -31,7 +31,7 @@ impl FormatNodeRule<TsIndexSignatureTypeMember> for FormatTsIndexSignatureTypeMe
             [
                 group(&format_args![
                     l_brack_token.format(),
-                    soft_block_indent(&format_args![parameter.format()]),
+                    soft_block_indent_with_maybe_space(&format_args![parameter.format()], true),
                     r_brack_token.format(),
                 ]),
                 type_annotation.format(),

@@ -51,7 +51,7 @@ impl FormatNodeRule<JsxSpreadAttribute> for FormatJsxSpreadAttribute {
         if f.comments().has_comments(argument.syntax())
             && !f.comments().is_suppressed(argument.syntax())
         {
-            write!(f, [soft_block_indent(&format_inner)])?;
+            write!(f, [soft_block_indent_with_maybe_space(&format_inner, true)])?;
         } else {
             write!(f, [format_inner])?;
         }

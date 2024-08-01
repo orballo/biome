@@ -110,7 +110,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                                     group(&format_args![indent(&format_args![
                                         hard_line_break(),
                                         text("("),
-                                        soft_block_indent(&format_body),
+                                        soft_block_indent_with_maybe_space(&format_body, true),
                                         text(")")
                                     ]),])
                                 ])]
@@ -123,7 +123,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                                 group(&format_args![
                                     space(),
                                     text("("),
-                                    soft_block_indent(&format_body),
+                                    soft_block_indent_with_maybe_space(&format_body, true),
                                     text(")")
                                 ])
                             ])]
@@ -261,10 +261,10 @@ fn format_signature(
                     } else {
                         write!(
                             f,
-                            [&soft_block_indent(&format_args![
-                                binding.format(),
-                                FormatTrailingCommas::All
-                            ])]
+                            [&soft_block_indent_with_maybe_space(
+                                &format_args![binding.format(), FormatTrailingCommas::All],
+                                true
+                            )]
                         )?
                     }
 
@@ -658,7 +658,7 @@ impl Format<JsFormatContext> for ArrowChain {
                         [group(&format_args![indent(&format_args![
                             hard_line_break(),
                             text("("),
-                            soft_block_indent(&format_tail_body),
+                            soft_block_indent_with_maybe_space(&format_tail_body, true),
                             text(")")
                         ]),])]
                     )?;
@@ -667,7 +667,7 @@ impl Format<JsFormatContext> for ArrowChain {
                         f,
                         [group(&format_args![
                             text("("),
-                            soft_block_indent(&format_tail_body),
+                            soft_block_indent_with_maybe_space(&format_tail_body, true),
                             text(")")
                         ])]
                     )?;

@@ -219,7 +219,7 @@ impl FormatRule<AnyJsConditional> for FormatJsAnyConditionalRule {
         };
 
         if layout.is_nested_test() || should_extra_indent {
-            group(&soft_block_indent(&grouped))
+            group(&soft_block_indent_with_maybe_space(&grouped, true))
                 .should_expand(has_multiline_comment)
                 .fmt(f)
         } else {
@@ -808,7 +808,7 @@ impl Format<JsFormatContext> for FormatJsxChainExpression<'_> {
                 f,
                 [
                     if_group_breaks(&text("(")),
-                    soft_block_indent(&format_expression),
+                    soft_block_indent_with_maybe_space(&format_expression, true),
                     if_group_breaks(&text(")"))
                 ]
             )

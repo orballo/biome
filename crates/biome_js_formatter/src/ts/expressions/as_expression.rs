@@ -59,7 +59,13 @@ pub(crate) fn format_as_or_satisfies_expression(
     });
 
     if is_callee_or_object {
-        write!(f, [group(&soft_block_indent(&format_inner))])
+        write!(
+            f,
+            [group(&soft_block_indent_with_maybe_space(
+                &format_inner,
+                true
+            ))]
+        )
     } else {
         write!(f, [format_inner])
     }

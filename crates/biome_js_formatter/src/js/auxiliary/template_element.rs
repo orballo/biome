@@ -148,9 +148,10 @@ impl Format<JsFormatContext> for FormatTemplateElement {
                     Some(element) if indent => {
                         write!(
                             f,
-                            [soft_block_indent(&format_with(
-                                |f| f.write_element(element.clone())
-                            ))]
+                            [soft_block_indent_with_maybe_space(
+                                &format_with(|f| f.write_element(element.clone())),
+                                true
+                            )]
                         )
                     }
                     Some(element) => f.write_element(element.clone()),
