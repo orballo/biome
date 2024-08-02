@@ -20,7 +20,9 @@ impl FormatNodeRule<TsIndexedAccessType> for FormatTsIndexedAccessType {
             [
                 object_type.format(),
                 l_brack_token.format(),
+                soft_line_break_or_space(),
                 index_type.format(),
+                soft_line_break_or_space(),
                 r_brack_token.format()
             ]
         ]
