@@ -808,7 +808,7 @@ impl Format<JsFormatContext> for FormatJsxChainExpression<'_> {
                 f,
                 [
                     if_group_breaks(&text("(")),
-                    soft_block_indent_with_maybe_space(&format_expression, true),
+                    soft_block_indent(&format_expression),
                     if_group_breaks(&text(")"))
                 ]
             )
