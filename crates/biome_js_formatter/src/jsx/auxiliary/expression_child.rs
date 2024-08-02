@@ -69,7 +69,7 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
                         ]
                     )?;
                 } else {
-                    write!(f, [format_dangling_comments(node.syntax())])?;
+                    write!(f, [space(), format_dangling_comments(node.syntax()), space()])?;
                 }
 
                 write!(f, [r_curly_token.format()])
