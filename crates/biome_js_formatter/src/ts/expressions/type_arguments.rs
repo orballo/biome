@@ -80,7 +80,9 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
                 f,
                 [
                     l_angle_token.format(),
+                    space(),
                     ts_type_argument_list.format(),
+                    space(),
                     r_angle_token.format()
                 ]
             )
