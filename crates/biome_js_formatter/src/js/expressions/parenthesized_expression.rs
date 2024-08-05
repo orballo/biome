@@ -36,7 +36,10 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
                 f,
                 [
                     l_paren_token.format(),
+                    // TODO: this should use `wp-mode` to conditionally add a space.
+                    space(),
                     expression.format(),
+                    space(),
                     r_paren_token.format()
                 ]
             )
@@ -45,7 +48,7 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
                 f,
                 [group(&format_args![
                     l_paren_token.format(),
-                    soft_block_indent(&expression.format()),
+                    soft_block_indent_with_maybe_space(&expression.format(), true),
                     r_paren_token.format()
                 ])]
             )

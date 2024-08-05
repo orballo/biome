@@ -26,7 +26,7 @@ impl FormatNodeRule<TsTypeAssertionAssignment> for FormatTsTypeAssertionAssignme
             f,
             [
                 l_angle_token.format(),
-                group(&soft_block_indent(&ty.format())),
+                group(&soft_block_indent_with_maybe_space(&ty.format(), true)),
                 r_angle_token.format(),
                 assignment.format()
             ]

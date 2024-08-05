@@ -52,6 +52,7 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
                 [
                     group(&format_args![
                         l_brack_token.format(),
+                        space(),
                         property_name.format(),
                         space(),
                         in_token.format(),
@@ -59,6 +60,7 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
                         keys_type.format(),
                         as_clause.as_ref().map(|_| space()),
                         as_clause.format(),
+                        space(),
                         r_brack_token.format(),
                     ]),
                     optional_modifier.format(),

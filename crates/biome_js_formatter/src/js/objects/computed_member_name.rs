@@ -19,7 +19,9 @@ impl FormatNodeRule<JsComputedMemberName> for FormatJsComputedMemberName {
             f,
             [
                 l_brack_token.format(),
+                space(),
                 expression.format(),
+                space(),
                 r_brack_token.format(),
             ]
         ]

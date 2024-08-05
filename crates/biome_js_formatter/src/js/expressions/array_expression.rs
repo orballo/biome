@@ -51,7 +51,7 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
                 f,
                 [
                     l_brack_token.format(),
-                    group(&soft_block_indent(&elements))
+                    group(&soft_block_indent_with_maybe_space(&elements, true))
                         .with_group_id(Some(group_id))
                         .should_expand(should_expand),
                     r_brack_token.format()

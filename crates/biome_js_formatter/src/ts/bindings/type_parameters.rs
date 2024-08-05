@@ -39,7 +39,7 @@ impl FormatNodeRule<TsTypeParameters> for FormatTsTypeParameters {
                 f,
                 [group(&format_args![
                     l_angle_token.format(),
-                    soft_block_indent(&items.format()),
+                    soft_block_indent_with_maybe_space(&items.format(), true),
                     r_angle_token.format()
                 ])
                 .with_group_id(self.options.group_id)]

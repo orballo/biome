@@ -44,7 +44,7 @@ impl FormatNodeRule<JsDoWhileStatement> for FormatJsDoWhileStatement {
                 while_token.format(),
                 space(),
                 l_paren_token.format(),
-                group(&soft_block_indent(&test.format())),
+                group(&soft_block_indent_with_maybe_space(&test.format(), true)),
                 r_paren_token.format(),
                 FormatStatementSemicolon::new(semicolon_token.as_ref())
             ]

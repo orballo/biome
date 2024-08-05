@@ -63,7 +63,7 @@ impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
                     for_token.format(),
                     space(),
                     l_paren_token.format(),
-                    group(&soft_block_indent(&format_args![
+                    group(&soft_block_indent_with_maybe_space(&format_args![
                         initializer.format(),
                         first_semi_token.format(),
                         soft_line_break_or_space(),
@@ -71,7 +71,7 @@ impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
                         second_semi_token.format(),
                         soft_line_break_or_space(),
                         update.format()
-                    ])),
+                    ], true)),
                     r_paren_token.format(),
                     format_body
                 ]

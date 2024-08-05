@@ -22,7 +22,13 @@ impl FormatNodeRule<TsTupleType> for FormatTsTupleType {
                 [format_dangling_comments(node.syntax()).with_block_indent()]
             )?;
         } else {
-            write!(f, [group(&soft_block_indent(&elements.format())),])?;
+            write!(
+                f,
+                [group(&soft_block_indent_with_maybe_space(
+                    &elements.format(),
+                    true
+                )),]
+            )?;
         }
 
         write!(f, [r_brack_token.format(),])

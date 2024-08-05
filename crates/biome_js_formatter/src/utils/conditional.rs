@@ -61,7 +61,6 @@ impl FormatRule<AnyJsConditional> for FormatJsAnyConditionalRule {
         let syntax = conditional.syntax();
         let consequent = conditional.consequent()?;
         let alternate = conditional.alternate()?;
-        let indent_style = f.options().indent_style();
         let layout = self.layout(conditional, f.context().options().source_type());
         let jsx_chain = layout.jsx_chain().unwrap_or(self.jsx_chain);
 
@@ -76,13 +75,7 @@ impl FormatRule<AnyJsConditional> for FormatJsAnyConditionalRule {
             )?;
 
             let is_consequent_nested = consequent.syntax().kind() == syntax.kind();
-            let consequent = format_with(|f| {
-                if indent_style.is_space() {
-                    write!(f, [align(2, &consequent)])
-                } else {
-                    write!(f, [indent(&consequent)])
-                }
-            });
+            let consequent = format_with(|f| write!(f, [align(2, &consequent)]));
             if is_consequent_nested {
                 // Add parentheses around the consequent if it is a conditional expression and fits on the same line
                 // so that it's easier to identify the parts that belong to a conditional expression.
@@ -107,13 +100,7 @@ impl FormatRule<AnyJsConditional> for FormatJsAnyConditionalRule {
                     space()
                 ]
             )?;
-            let alternate = format_with(|f| {
-                if indent_style.is_space() {
-                    write!(f, [align(2, &alternate)])
-                } else {
-                    write!(f, [indent(&alternate)])
-                }
-            });
+            let alternate = format_with(|f| write!(f, [align(2, &alternate)]));
             write!(f, [alternate])
         });
 
@@ -219,7 +206,7 @@ impl FormatRule<AnyJsConditional> for FormatJsAnyConditionalRule {
         };
 
         if layout.is_nested_test() || should_extra_indent {
-            group(&soft_block_indent(&grouped))
+            group(&soft_block_indent_with_maybe_space(&grouped, true))
                 .should_expand(has_multiline_comment)
                 .fmt(f)
         } else {

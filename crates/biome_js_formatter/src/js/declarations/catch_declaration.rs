@@ -40,7 +40,10 @@ impl FormatNodeRule<JsCatchDeclaration> for FormatJsCatchDeclaration {
                 f,
                 [
                     l_paren_token.format(),
-                    soft_block_indent(&format_args![binding.format(), type_annotation.format()]),
+                    soft_block_indent_with_maybe_space(
+                        &format_args![binding.format(), type_annotation.format()],
+                        true
+                    ),
                     r_paren_token.format()
                 ]
             )
@@ -49,7 +52,9 @@ impl FormatNodeRule<JsCatchDeclaration> for FormatJsCatchDeclaration {
                 f,
                 [
                     l_paren_token.format(),
+                    space(),
                     binding.format(),
+                    space(),
                     type_annotation.format(),
                     r_paren_token.format()
                 ]

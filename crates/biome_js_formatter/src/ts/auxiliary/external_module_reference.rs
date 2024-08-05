@@ -25,7 +25,10 @@ impl FormatNodeRule<TsExternalModuleReference> for FormatTsExternalModuleReferen
             [
                 require_token.format(),
                 l_paren_token.format(),
+                // TODO: This would need a `wp-mode` bool to toggle.
+                space(),
                 source.format(),
+                space(),
                 r_paren_token.format(),
             ]
         ]

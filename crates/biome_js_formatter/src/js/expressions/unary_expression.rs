@@ -2,6 +2,7 @@ use crate::prelude::*;
 
 use biome_formatter::{format_args, write};
 use biome_js_syntax::parentheses::NeedsParentheses;
+use biome_js_syntax::AnyJsExpression;
 use biome_js_syntax::JsUnaryExpression;
 use biome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 
@@ -26,7 +27,16 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
             JsUnaryOperator::Delete | JsUnaryOperator::Void | JsUnaryOperator::Typeof
         );
 
-        if is_keyword_operator {
+        let is_logical_not_operator = matches!(operation, JsUnaryOperator::LogicalNot);
+
+        let argument_has_logical_not_operator = match &argument {
+            AnyJsExpression::JsUnaryExpression(expression) => {
+                expression.operator()? == JsUnaryOperator::LogicalNot
+            }
+            _ => false,
+        };
+
+        if is_keyword_operator || (is_logical_not_operator && !argument_has_logical_not_operator) {
             write!(f, [space()])?;
         }
 
@@ -37,7 +47,7 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
                 f,
                 [group(&format_args![
                     text("("),
-                    soft_block_indent(&argument.format()),
+                    soft_block_indent_with_maybe_space(&argument.format(), true),
                     text(")")
                 ])]
             )

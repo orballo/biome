@@ -29,8 +29,10 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
                 f,
                 [
                     l_curly_token.format(),
+                    space(),
                     expression.format(),
                     line_suffix_boundary(),
+                    space(),
                     r_curly_token.format()
                 ]
             )
@@ -39,7 +41,7 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
                 f,
                 [group(&format_args![
                     l_curly_token.format(),
-                    soft_block_indent(&expression.format()),
+                    soft_block_indent_with_maybe_space(&expression.format(), true),
                     line_suffix_boundary(),
                     r_curly_token.format()
                 ])]

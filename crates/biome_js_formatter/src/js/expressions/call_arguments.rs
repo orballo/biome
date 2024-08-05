@@ -62,6 +62,8 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [
                     l_paren_token.format(),
+                    // TODO: needs `wp-mode` implemented to make it optional.
+                    space(),
                     format_with(|f| {
                         f.join_with(space())
                             .entries(
@@ -70,6 +72,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                             )
                             .finish()
                     }),
+                    space(),
                     r_paren_token.format()
                 ]
             );
@@ -115,9 +118,10 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [
                     l_paren_token.format(),
-                    soft_block_indent(&format_once(|f| {
-                        write_arguments_multi_line(arguments.iter(), f)
-                    })),
+                    soft_block_indent_with_maybe_space(
+                        &format_once(|f| { write_arguments_multi_line(arguments.iter(), f) }),
+                        true
+                    ),
                     r_paren_token.format(),
                 ]
             )
@@ -441,11 +445,14 @@ fn write_grouped_arguments(
             buffer,
             [
                 l_paren,
-                format_with(|f| {
-                    f.join_with(soft_line_break_or_space())
-                        .entries(grouped.iter())
-                        .finish()
-                }),
+                soft_block_indent_with_maybe_space(
+                    &format_with(|f| {
+                        f.join_with(soft_line_break_or_space())
+                            .entries(grouped.iter())
+                            .finish()
+                    }),
+                    true
+                ),
                 r_paren
             ]
         );
@@ -483,7 +490,8 @@ fn write_grouped_arguments(
             buffer,
             [
                 l_paren,
-                format_with(|f| {
+                soft_line_break_or_space(),
+                &format_with(|f| {
                     let mut joiner = f.join_with(soft_line_break_or_space());
 
                     match group_layout {
@@ -500,6 +508,7 @@ fn write_grouped_arguments(
                         }
                     }
                 }),
+                soft_line_break_or_space(),
                 r_paren
             ]
         )?;
@@ -719,23 +728,26 @@ impl<'a> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a> {
             f,
             [group(&format_args![
                 self.l_paren,
-                soft_block_indent(&format_with(|f| {
-                    for (index, entry) in self.args.iter().enumerate() {
-                        if index > 0 {
-                            match entry.leading_lines() {
-                                0 | 1 => write!(f, [soft_line_break_or_space()])?,
-                                _ => write!(f, [empty_line()])?,
+                soft_block_indent_with_maybe_space(
+                    &format_with(|f| {
+                        for (index, entry) in self.args.iter().enumerate() {
+                            if index > 0 {
+                                match entry.leading_lines() {
+                                    0 | 1 => write!(f, [soft_line_break_or_space()])?,
+                                    _ => write!(f, [empty_line()])?,
+                                }
                             }
+
+                            write!(f, [entry])?;
                         }
 
-                        write!(f, [entry])?;
-                    }
-
-                    if !is_inside_import {
-                        write!(f, [FormatTrailingCommas::All])?;
-                    }
-                    Ok(())
-                })),
+                        if !is_inside_import {
+                            write!(f, [FormatTrailingCommas::All])?;
+                        }
+                        Ok(())
+                    }),
+                    true
+                ),
                 self.r_paren,
             ])
             .should_expand(self.expand)]

@@ -73,10 +73,12 @@ impl Format<JsFormatContext> for FormatAnyJsParameters {
 
                 write!(
                     f,
-                    [FormatJsAnyParameterList::with_layout(
-                        &list,
-                        ParameterLayout::Hug
-                    )]
+                    [
+                        // TODO: this should be set conditionally with `wp-mode`˝
+                        space(),
+                        FormatJsAnyParameterList::with_layout(&list, ParameterLayout::Hug),
+                        space()
+                    ]
                 )?;
 
                 if !parentheses_not_needed {
@@ -96,10 +98,10 @@ impl Format<JsFormatContext> for FormatAnyJsParameters {
 
                 write!(
                     f,
-                    [soft_block_indent(&FormatJsAnyParameterList::with_layout(
-                        &list,
-                        ParameterLayout::Default,
-                    ))]
+                    [soft_block_indent_with_maybe_space(
+                        &FormatJsAnyParameterList::with_layout(&list, ParameterLayout::Default),
+                        true
+                    )]
                 )?;
 
                 if !parentheses_not_needed {

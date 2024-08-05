@@ -168,3 +168,24 @@ new-changeset:
 dry-run-release *args='':
     knope release --dry-run {{args}}
 
+set-path:
+    #!/bin/sh
+    # Define the new path to be added
+    NEW_PATH="$P/target/release"
+
+    # Define the path to the .zshrc file
+    ZSHRC_FILE="$HOME/.zshrc"
+
+    # Add the new path to the end of the .zshrc if it's not already included
+    if ! grep -q "export PATH=.*${NEW_PATH}" "$ZSHRC_FILE"; then
+        echo "Adding new PATH to .zshrc"
+        echo "export PATH=\$PATH:${NEW_PATH}" >> "$ZSHRC_FILE"
+        echo "Done. Please restart your terminal or run: source $HOME/.zshrc"
+    fi
+
+@build:
+    cargo build --release -p biome_cli
+    just set-path
+
+watch-quick-test package="biome_js_formatter":
+  cargo watch -w crates/biome_js_formatter -x "test -p {{package}} --test quick_test -- quick_test --nocapture --ignored"

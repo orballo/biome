@@ -192,7 +192,7 @@ impl FormatFunction {
                 let mut buffer = RemoveSoftLinesBuffer::new(f);
 
                 let mut recording = buffer.start_recording();
-                write!(recording, [parameters.format()])?;
+                write!(recording, [&parameters.format()])?;
                 let recorded = recording.stop();
 
                 if recorded.will_break() {

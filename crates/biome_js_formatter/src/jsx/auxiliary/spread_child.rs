@@ -51,7 +51,7 @@ impl FormatNodeRule<JsxSpreadChild> for FormatJsxSpreadChild {
         write!(f, [l_curly_token.format()])?;
 
         if f.comments().has_comments(expression.syntax()) {
-            write!(f, [soft_block_indent(&format_inner)])?;
+            write!(f, [soft_block_indent_with_maybe_space(&format_inner, true)])?;
         } else {
             write!(f, [format_inner])?;
         }

@@ -18,10 +18,10 @@ impl FormatNodeRule<JsonArrayValue> for FormatJsonArrayValue {
             f,
             [
                 l_brack_token.format(),
-                group(&soft_block_indent(&format_args![
+                group(&soft_block_indent_with_maybe_space(&format_args![
                     elements.format(),
                     format_dangling_comments(node.syntax())
-                ]))
+                ], true))
                 .should_expand(should_expand),
                 line_suffix_boundary(),
                 r_brack_token.format()
